@@ -178,8 +178,6 @@ impl PartialEq for MillerLoopResult {
     }
 }
 
-impl Eq for MillerLoopResult {}
-
 impl ConditionallySelectable for MillerLoopResult {
     fn conditional_select(a: &Self, b: &Self, choice: Choice) -> Self {
         MillerLoopResult(Fp12::conditional_select(&a.0, &b.0, choice))
