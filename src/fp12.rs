@@ -8,7 +8,6 @@ use core::{
 };
 
 use ff::Field;
-use rand_core::RngCore;
 use subtle::{Choice, ConditionallySelectable, ConstantTimeEq, CtOption};
 
 use crate::{fp::Fp, fp2::Fp2, fp6::Fp6};

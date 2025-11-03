@@ -12,7 +12,6 @@ use group::{
     prime::{PrimeCurve, PrimeCurveAffine, PrimeGroup},
     Curve, Group, GroupEncoding, UncompressedEncoding, WnafGroup,
 };
-use rand_core::RngCore;
 use subtle::{Choice, ConditionallySelectable, CtOption};
 
 use crate::{fp2::Fp2, Bls12, Engine, G1Affine, Gt, PairingCurveAffine, Scalar};
