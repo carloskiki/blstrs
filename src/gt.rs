@@ -397,7 +397,7 @@ mod tests {
     use super::*;
 
     use group::{prime::PrimeCurveAffine, Curve};
-    use pairing_lib::{Engine, MultiMillerLoop};
+    use pairing_lib::{Engine, MillerLoopResult, MultiMillerLoop};
     use rand_core::SeedableRng;
     use rand_xorshift::XorShiftRng;
 
