@@ -211,10 +211,6 @@ impl_sum!(Fp12);
 impl_product!(Fp12);
 
 impl Field for Fp12 {
-    fn random(mut rng: impl RngCore) -> Self {
-        Fp12::new(Fp6::random(&mut rng), Fp6::random(&mut rng))
-    }
-
     const ZERO: Self = Fp12::new(Fp6::ZERO, Fp6::ZERO);
 
     const ONE: Self = Fp12::new(Fp6::ONE, Fp6::ZERO);
@@ -249,6 +245,10 @@ impl Field for Fp12 {
     fn sqrt_ratio(_num: &Self, _div: &Self) -> (Choice, Self) {
         // ff::helpers::sqrt_ratio_generic(num, div)
         unimplemented!()
+    }
+
+    fn try_from_rng<R: rand_core::TryRngCore + ?Sized>(rng: &mut R) -> Result<Self, R::Error> {
+        Ok(Fp12::new(Fp6::try_from_rng(rng)?, Fp6::try_from_rng(rng)?))
     }
 }
 

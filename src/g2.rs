@@ -618,28 +618,6 @@ impl G2Projective {
 impl Group for G2Projective {
     type Scalar = Scalar;
 
-    fn random(mut rng: impl RngCore) -> Self {
-        let mut out = blst_p2::default();
-        let mut msg = [0u8; 64];
-        rng.fill_bytes(&mut msg);
-        const DST: [u8; 16] = [0; 16];
-        const AUG: [u8; 16] = [0; 16];
-
-        unsafe {
-            blst_encode_to_g2(
-                &mut out,
-                msg.as_ptr(),
-                msg.len(),
-                DST.as_ptr(),
-                DST.len(),
-                AUG.as_ptr(),
-                AUG.len(),
-            )
-        };
-
-        G2Projective(out)
-    }
-
     fn identity() -> Self {
         G2Projective(blst_p2::default())
     }
@@ -656,6 +634,28 @@ impl Group for G2Projective {
         let mut double = blst_p2::default();
         unsafe { blst_p2_double(&mut double, &self.0) };
         G2Projective(double)
+    }
+
+    fn try_from_rng<R: rand_core::TryRngCore + ?Sized>(rng: &mut R) -> Result<Self, R::Error> {
+        let mut out = blst_p2::default();
+        let mut msg = [0u8; 64];
+        rng.try_fill_bytes(&mut msg)?;
+        const DST: [u8; 16] = [0; 16];
+        const AUG: [u8; 16] = [0; 16];
+
+        unsafe {
+            blst_encode_to_g2(
+                &mut out,
+                msg.as_ptr(),
+                msg.len(),
+                DST.as_ptr(),
+                DST.len(),
+                AUG.as_ptr(),
+                AUG.len(),
+            )
+        };
+
+        Ok(G2Projective(out))
     }
 }
 
